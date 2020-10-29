@@ -40,6 +40,13 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             if ($scope.attribute.input === 'tags') {
                 $scope.value = $scope.formatTags($scope.value);
             }
+            // The below fix is to remove the trailing decimals
+            // from the database record.
+            if ($scope.attribute.input === 'number') {
+                $scope.value = $scope.value.map(function (entry) {
+                    return parseFloat(entry);
+                });
+            }
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {
                     $scope.value = $scope.value.map(function (entry) {
